@@ -13,7 +13,7 @@ G = laplacian_pyramid.generative(64, 9,  3, base_mask_radius=base_mask_radius)
 
 for l in lambdav:
 	label = 'server-l' + str(l).split('.', 1)[1] + '-b' + str(base_mask_radius)
-	print "Learning dictionary for l = " + str(l) + " with label " + label
+	print("Learning dictionary for l = " + str(l) + " with label " + label)
 	scales.learn(G=G, iterations=1500, inf_iterations=250,
 		base_image_dim=64**2, lambdav=l, patch_dim=9**2, scales=3,
 		alpha=[4, 4, 4], label=label, plot_every=50, decrease_every=200,

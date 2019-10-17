@@ -58,9 +58,9 @@ def learn(Phi=None, IMAGES=None, scales=3, patch_dim=9*9,
         neurons = image_dim
 
         for n in range(neurons):
-          print n
+          print(n)
           update = np.dot(patches[n], A[s][n].T)
-          print localize(update, image_side, patch_side, divmod(n, image_side)) 
+          print(localize(update, image_side, patch_side, divmod(n, image_side))) 
           dPhi[s][:, n] = localize(update, image_side, patch_side, divmod(n, image_side)) 
 
       for s in range(s):
@@ -68,7 +68,7 @@ def learn(Phi=None, IMAGES=None, scales=3, patch_dim=9*9,
         normalize(Phi[s], norm='l1', axis=0, copy=False)
 
       if mod(t,10):
-        print t
+        print(t)
         display()
 
 
@@ -137,9 +137,9 @@ def sparsify(I, G, Phi, lambdav, iterations=150, eta=0.1):
     # print np.sum((a-olda)**2)
     t += 1
 
-  print np.sum((a-olda)**2)
+  print(np.sum((a-olda)**2))
 
-  A = range(scales)
+  A = list(range(scales))
   for s in range(scales):
     neurons = Phi[s].shape[1]
     A[s] = a[:neurons,:]
@@ -149,7 +149,7 @@ def sparsify(I, G, Phi, lambdav, iterations=150, eta=0.1):
 
 def initialize(base_image_dim, patch_dim, scales):
   """ Initialize sparse Phi matrix with Gaussian random noise """
-  Phi = range(scales)
+  Phi = list(range(scales))
   base_image_side = int(sqrt(base_image_dim))
   patch_side = int(sqrt(patch_dim))
   pad = patch_side-1
@@ -215,7 +215,7 @@ def display(t, Phi, base_image_side, save=False, overcomplete=1):
   scales = len(Phi)
   
   patch_side = sqrt(patch_dim)
-  print "Iteration " + str(t)
+  print("Iteration " + str(t))
 
   for s in range(scales):
     (patch_dim, neurons) = Phi[s].shape

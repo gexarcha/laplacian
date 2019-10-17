@@ -60,7 +60,7 @@ def learn(Phi=None, image_dim=32*32, patch_dim=9*9, normalize=True, bandpass=Fal
 
       A = fista.fista(I, Phi, lambdav, max_iterations=10*overcomplete, display=False)
       R = reconstruct(Phi, A)
-      print "New Objective: " + str(np.sum((I-R)**2) + lambdav*np.sum(np.abs(A)))
+      print("New Objective: " + str(np.sum((I-R)**2) + lambdav*np.sum(np.abs(A))))
 
       # Armajillo's Rule
       alpha = alpha * beta
@@ -87,7 +87,7 @@ def learn_conv(Phi=None, scales=3, image_dim=32*32, patch_dim=9*9, whiten=True,
 
     if whiten == True:
       label = label + '-whitened'
-      print "Whitening"
+      print("Whitening")
       I = preprocess.extract_images(images='vanhateran', num_images=50000, image_dim=image_dim)
       (_, W) = preprocess.whitening_matrix(I)
 
@@ -172,7 +172,7 @@ def learn_scales(Phi=None, scales=2, image_dim=32*32, patch_dim=9*9, normalize=T
       dPhi = (1-gamma)*dPhi + gamma*old_dPhi
       old_dPhi = dPhi 
 
-      print "Old Objective: " + str(np.sum((I-R)**2) + lambdav*np.sum(np.abs(A)))
+      print("Old Objective: " + str(np.sum((I-R)**2) + lambdav*np.sum(np.abs(A))))
       Phi = Phi.tolil()
       Phi[indices[0], indices[1]] = Phi[indices[0], indices[1]] + (alpha/float(batch)) * dPhi.T
       Phi = Phi.tocsc()
@@ -180,7 +180,7 @@ def learn_scales(Phi=None, scales=2, image_dim=32*32, patch_dim=9*9, normalize=T
 
       A = fista.fista(I, Phi, lambdav, max_iterations=10*overcomplete, display=False)
       R = reconstruct(Phi, A)
-      print "New Objective: " + str(np.sum((I-R)**2) + lambdav*np.sum(np.abs(A)))
+      print("New Objective: " + str(np.sum((I-R)**2) + lambdav*np.sum(np.abs(A))))
 
       # Armajillo's Rule
       alpha = alpha * beta
@@ -236,9 +236,9 @@ def sparsify(I, Phi, lambdav, iterations=75, eta=0.1):
 
     # print np.sum((a-olda)**2)
     t += 1
-  print time.time() - t1
+  print(time.time() - t1)
   #print np.sum((a-olda)**2)
-  print "Avg. L1 Norm: " + str(np.sum(np.abs(a))/float(batch))
+  print("Avg. L1 Norm: " + str(np.sum(np.abs(a))/float(batch)))
 
   return a
 
@@ -339,7 +339,7 @@ def display(t, Phi, patch_dim=9*9, save=False, overcomplete=1, label=''):
   neurons = total_neurons/overcomplete
   image_side = int(sqrt(image_dim))
   patch_side = int(sqrt(patch_dim))
-  print "Iteration " + str(t)
+  print("Iteration " + str(t))
 
   image = -1*np.ones((overcomplete*(patch_side*np.sqrt(neurons)+sqrt(neurons)+1),patch_side*sqrt(neurons)+sqrt(neurons)+1))
   for o in range(overcomplete):

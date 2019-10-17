@@ -56,7 +56,7 @@ def learn(G=None, Phi=None, dataset='vanhateran', base_image_dim=32*32,
       error = I - R
 
       old_obj = np.sum(error**2) + lambdav*np.sum(np.sum(np.abs(a)) for a in A)
-      print "Old Objective: " + str(old_obj)
+      print("Old Objective: " + str(old_obj))
 
       for s in range(scales):
         neurons = base_neurons/4**((scales-s-1))
@@ -87,19 +87,19 @@ def learn(G=None, Phi=None, dataset='vanhateran', base_image_dim=32*32,
 
       error = I - R
       new_obj = np.sum(error**2) + lambdav*np.sum(np.sum(np.abs(a)) for a in A)
-      print "New Objective: " + str(new_obj)
+      print("New Objective: " + str(new_obj))
 
       # Armajillo's Rule
       if new_obj > old_obj or t % decrease_every == 0:
         alpha = [a * beta for a in alpha]
-        print "Learning rate: " + str(alpha)
+        print("Learning rate: " + str(alpha))
 
       if t % plot_every == 0:
           display_scales(t, G, Phi, save=save, patch_side=patch_side, label=label)
           # Eigenvalue doesn't change that often
           M = sps.hstack([G[s].dot(Phi[s]) for s in range(scales)]).tocsr()
           max_eig = scipy.sparse.linalg.svds(M, 1, which='LM', return_singular_vectors=False)
-          print "Max eigenvalue" + str(max_eig)
+          print("Max eigenvalue" + str(max_eig))
 
 def reconstruct(G, Phi, A):
     scales = len(Phi)
@@ -251,7 +251,7 @@ def patchify(img, patch_shape):
 def display_scales(t, G, Phi, patch_side=9, save=False, overcomplete=1, label=''):
   scales = len(Phi)
 
-  print "Iteration " + str(t)
+  print("Iteration " + str(t))
 
   for s in range(scales):
     (image_dim, total_neurons) = Phi[s].shape

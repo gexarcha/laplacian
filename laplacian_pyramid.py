@@ -84,7 +84,7 @@ def generative(base_image_side, patch_side, scales, kernel_type='binomial', base
     K = K[mask_radius:image_side+mask_radius, mask_radius:image_side+mask_radius]
     return K.reshape(((image_side)**2, 1))
 
-  G = range(scales)
+  G = list(range(scales))
   base_image_dim = base_image_side**2
   pad = (patch_side-1)/2
 

@@ -60,7 +60,7 @@ def laplacianGenerative(base_image_dim, scales):
 
       return G.reshape((1,image_side**2))
 
-    G = range(scales)
+    G = list(range(scales))
 
     for s in range(scales):
       if s == 0:

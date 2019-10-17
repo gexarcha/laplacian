@@ -47,9 +47,9 @@ def sparsify(I, G, Phi, lambdav, iterations=150, eta=0.1):
     # print np.sum((a-olda)**2)
     t += 1
 
-  print np.sum((a-olda)**2)
+  print(np.sum((a-olda)**2))
 
-  A = range(scales)
+  A = list(range(scales))
   for s in range(scales):
     neurons = Phi[s].shape[1]
     A[s] = a[:neurons,:]

@@ -40,9 +40,9 @@ def laplacian(image_dim=32*32, scales=3, normalize=False, plot=False, images='va
 	elif images == 'cifar':
 		def unpickle(file):
 		 # Open CIFAR files
-			import cPickle
+			import pickle
 			fo = open(file, 'rb')
-			dict = cPickle.load(fo)
+			dict = pickle.load(fo)
 			fo.close()
 			return dict
 		data = 'data_batch_1'
@@ -159,13 +159,13 @@ def learn(Phi=None, IMAGES=None, patch_dim=8*8,
 		for s in range(scales):
 			error[s] = I[s].reshape((batch, base_image_side/2**s, base_image_side/2**s)) - R[s]
 
-		print "average L1 norm: " + str(np.sum(np.abs(A))/batch)
+		print("average L1 norm: " + str(np.sum(np.abs(A))/batch))
 
 		if mod(t,50) == 0:
 			display(t, Phi, base_image_side, save=save)
-			print "Error norm across level 0: " + str(np.sum(error[0]**2))
-			print "Error norm across level 1: " + str(np.sum(error[1]**2))
-			print "Error norm across level 2: " + str(np.sum(error[2]**2))
+			print("Error norm across level 0: " + str(np.sum(error[0]**2)))
+			print("Error norm across level 1: " + str(np.sum(error[1]**2)))
+			print("Error norm across level 2: " + str(np.sum(error[2]**2)))
 
 		dPhi = [np.zeros((overcomplete*((base_image_side/2**s)-patch_side+1)**2, patch_dim)) for s in range(scales)]
 
@@ -198,7 +198,7 @@ def learn(Phi=None, IMAGES=None, patch_dim=8*8,
 		for s in range(scales):
 			value = np.sum(error[s]**2) + value
 		value = value + lambdav*np.sum(np.abs(A))
-		print "Before value: " + str(value)
+		print("Before value: " + str(value))
 
 		newPhi = [np.zeros((((base_image_side/2**s)-patch_side+1)**2, patch_dim)) for s in range(scales)]
 		newValue = float("inf")
@@ -218,8 +218,8 @@ def learn(Phi=None, IMAGES=None, patch_dim=8*8,
 
 		newValue = newValue + lambdav*np.sum(np.abs(A))
 		alpha = max(0.25,beta*alpha)
-		print "New value:" + str(newValue)
-		print "alpha: " + str(alpha)
+		print("New value:" + str(newValue))
+		print("alpha: " + str(alpha))
 
 		for s in range(scales):
 			Phi[s] = newPhi[s]
@@ -350,7 +350,7 @@ def sparsify(I, Phi, mappings, lambdav, iterations=150, eta=0.1):
 
 		t += 1
 
-	print np.sum((a-olda)**2)
+	print(np.sum((a-olda)**2))
 
 	return a
 
@@ -358,7 +358,7 @@ def display(t, Phi, base_image_side, save=False, overcomplete=1):
 	scales = len(Phi)
 	(base_neurons, patch_dim) = Phi[0].shape
 	patch_side = sqrt(patch_dim)
-	print "Iteration " + str(t)
+	print("Iteration " + str(t))
 
 	for s in range(scales):
 		neurons = Phi[s].shape[0]

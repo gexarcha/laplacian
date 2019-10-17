@@ -30,7 +30,7 @@ def snr():
   # Function that plots reconstruction error by sparsity
   sparsity = [0.001, 0.01, 0.1, 1]
   for s in sparsity:
-    print s
+    print(s)
 
 def mse_vs_sparsity(batch=100, image_dim=32*32, patch_dim=9*9):
   patch_side = int(np.sqrt(patch_dim))

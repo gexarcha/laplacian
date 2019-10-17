@@ -1,4 +1,4 @@
-from __future__ import division
+
 
 from numbapro import cuda
 import numpy as np
@@ -27,7 +27,7 @@ def fista(I, Phi, lambdav, L=None, tol=10e-6, max_iterations=200, display=True, 
 
 	if L == None:
 		L = scipy.sparse.linalg.svds(Phi, 1, which='LM', return_singular_vectors=False)
-		print "Max eigenvalue: ." + str(L)
+		print("Max eigenvalue: ." + str(L))
 
 	L = (L**2)*4 # L = svd(Phi) -> eig(2*(Phi.T*Phi))
 	invL = 1/L
@@ -67,7 +67,7 @@ def fista(I, Phi, lambdav, L=None, tol=10e-6, max_iterations=200, display=True, 
 	start = l2l1obj(b, c, descr, d_I, d_Phi, d_x, d_t, d_t2, lambdav, blockdim_1d, griddim_1d)
 	obj2 = start
 
-	for i in xrange(max_iterations):
+	for i in range(max_iterations):
 
 		# x2 = 2*Q*y + c
 		# b.symm('L', 'U', n, batch, 2, d_Q, d_y, 0, d_x2)
@@ -95,7 +95,7 @@ def fista(I, Phi, lambdav, L=None, tol=10e-6, max_iterations=200, display=True, 
 
 		if verbose:
 			x2 = d_x2.copy_to_host()
-			print "L1 Objective: " + str(obj2)
+			print("L1 Objective: " + str(obj2))
 			# print "L1 Objective: " +  str(lambdav*np.sum(np.abs(x2)) + np.sum((I-Phi.dot(x2))**2))
 
 		if np.abs(obj-obj2)/float(obj) < tol:
@@ -104,10 +104,10 @@ def fista(I, Phi, lambdav, L=None, tol=10e-6, max_iterations=200, display=True, 
 	x2 = d_x2.copy_to_host()
 
 	if display:
-		print "FISTA Iterations: " + str(i)
+		print("FISTA Iterations: " + str(i))
 		# print "L1 Objective: " + str(obj2)
-		print "L1 Objective: " +  str(lambdav*np.sum(np.abs(x2)) + np.sum((I-Phi.dot(x2))**2))
-		print "Objective delta: " + str(obj2-start)
+		print("L1 Objective: " +  str(lambdav*np.sum(np.abs(x2)) + np.sum((I-Phi.dot(x2))**2)))
+		print("Objective delta: " + str(obj2-start))
 
 	return x2
 

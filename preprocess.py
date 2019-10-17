@@ -22,7 +22,7 @@ def extract_images(dataset='vanhateran', num_images=2000, image_dim=32*32,
   IMAGES = np.zeros((num_images,image_dim))
 
   image_dir = '/data/sets/images/' + dataset + '/'
-  filenames = filter( lambda f: not f.startswith('.'), os.listdir(image_dir))
+  filenames = [f for f in os.listdir(image_dir) if not f.startswith('.')]
 
   num_images = num_images/patches_per_image
   filenames = random.sample(filenames, num_images)
@@ -76,7 +76,7 @@ def extract_images(dataset='vanhateran', num_images=2000, image_dim=32*32,
     IMAGES = IMAGES.reshape(num_images*patches_per_image, (image_side+2*pad)**2)
 
   if whiten != False:
-    print "Whitening"
+    print("Whitening")
     IMAGES = IMAGES.dot(whiten)
 
 
